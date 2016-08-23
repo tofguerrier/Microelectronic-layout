@@ -1,5 +1,5 @@
 /*
-Description: Generate an exclude Layer  over given std cell everzwhere they are instantiated.
+Description: Generate an exclude Layer  over given std cell everywhere they are instantiated.
 ; Input: top level cell
 ; procedure will do down the hierarchy
 ; only cells affected are the one of the current library
@@ -37,7 +37,7 @@ procedure(GenerateLayerFromInstances(cv layer2detect layer2add std_cell_library)
 
 	;reduce it to instance coming from std cell lib
 	l2dshp1_stdcell = setof(localshp l2dshp1_islist member(car(localshp~>libName) std_cell_library))
-	;DEBUG fprintf(poport "Debug ...%L\n" l2dshp1_stdcell~>??)	
+	;DEBUG fprintf(poport "Debug ...%L\n" l2dshp1_stdcell~>??)
 
 	; need to be copied to top level first
 	foreach(mapcar srcShape 	l2dshp1_stdcell
@@ -52,7 +52,7 @@ procedure(GenerateLayerFromInstances(cv layer2detect layer2add std_cell_library)
 		)
 
 	)
-	
+
 procedure(GenerateLayerFromInstanceBoundary(cv layer2addlist std_cell_library)
 	;only consider instances belonging to std cell
 	instances_list =setof(inst cv~>instances member(inst~>master~>libName std_cell_library))
@@ -64,7 +64,7 @@ procedure(GenerateLayerFromInstanceBoundary(cv layer2addlist std_cell_library)
 	)
 )
 
-	
+
 procedure(GenerateExcludeDFMlayer(cv)
 	useBoundary = 1
 
@@ -84,11 +84,11 @@ procedure(GenerateExcludeDFMlayer(cv)
 	else
 		GenerateLayerFromInstances(cv layer2detect layer2add std_cell_library)
 	)
-	
+
 	dbSave(cv)
 	dbClose(cv)
 )
-			
+
 ;Usage Example
 ;Working Library Name
 ;libName = "Your working library name"
@@ -101,14 +101,10 @@ procedure(RecursiveFromTopCellGenerateExcludeDFM(libName TopCellName)
 	cvId = dbOpenCellViewByType(libName TopCellName "layout" nil "a")
 	fprintf(poport "Processing ...%L\n" TopCellName )
 	GenerateExcludeDFMlayer(cvId)
-	
+
 	foreach(inst cvId~>instances
 		if(inst~>libName == libName then
 			RecursiveFromTopCellGenerateExcludeDFM(libName inst~>cellName)
-		)	
+		)
 	)
 )
-
-
-
-
