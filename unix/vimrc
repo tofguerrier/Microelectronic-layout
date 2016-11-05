@@ -1,0 +1,11 @@
+"
+" Personal preference .vimrc file
+" Use vim settings.
+set tabstop=4                   " a tab is four spaces
+set autoindent                  " always set autoindenting on
+set number                      " always show line numbers
+set showmatch                   " set show matching parenthesis
+set ignorecase                  " ignore case when searching
+set smartcase                   " ignore case if search pattern is all lowercase,
+                                "    case-sensitive otherwise
+set gdefault                    " search/replace "globally" (on a line) by default
